@@ -1,0 +1,8 @@
+C:\Desarrollo\Fuentes\Etna\EtnaWcfRest\EtnaWCFRest\ETNA.TestService\bin\Debug\ETNA.TestService.exe
+C:\Desarrollo\Fuentes\Etna\EtnaWcfRest\EtnaWCFRest\ETNA.TestService\bin\Debug\ETNA.TestService.pdb
+C:\Desarrollo\Fuentes\Etna\EtnaWcfRest\EtnaWCFRest\ETNA.TestService\obj\x86\Debug\ETNA.TestService.csprojResolveAssemblyReference.cache
+C:\Desarrollo\Fuentes\Etna\EtnaWcfRest\EtnaWCFRest\ETNA.TestService\obj\x86\Debug\ETNA.TestService.exe
+C:\Desarrollo\Fuentes\Etna\EtnaWcfRest\EtnaWCFRest\ETNA.TestService\obj\x86\Debug\ETNA.TestService.pdb
+C:\Desarrollo\Fuentes\Etna\EtnaWcfRest\EtnaWCFRest\ETNA.TestService\bin\Debug\Etna.DTOEntidades.dll
+C:\Desarrollo\Fuentes\Etna\EtnaWcfRest\EtnaWCFRest\ETNA.TestService\bin\Debug\Etna.DTOEntidades.pdb
+C:\Desarrollo\Fuentes\Etna\EtnaWcfRest\EtnaWCFRest\ETNA.TestService\bin\Debug\ETNA.TestService.exe.config

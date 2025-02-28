@@ -1,0 +1,49 @@
+CREATE PROCEDURE "EXX_TPED_UnidadMedidaArticulo_Listar"
+(
+	IN P_CODART varchar(60),
+	IN P_LISPRE int,
+	IN P_MONEDA varchar(5)
+)
+AS
+BEGIN
+	SELECT	T3."UomEntry",
+			T4."UomCode",
+			T4."UomName",
+			T3."AltQty", 
+			T3."BaseQty"
+			,T5."Price"
+			,T5."Currency"
+			,T5."PriceList"
+	FROM "OITM" T1 
+	INNER JOIN "OUGP" T2 ON T2."UgpEntry" = T1."UgpEntry" 
+	INNER JOIN "UGP1" T3 ON T3."UgpEntry" = T2."UgpEntry"
+	INNER JOIN "OUOM" T4 ON T4."UomEntry" = T3."UomEntry"
+	INNER JOIN "ITM1" T5 ON T5."UomEntry" = T3."UomEntry"
+						AND T5."ItemCode" = T1."ItemCode"
+	WHERE T5."Price" > 0 AND	
+		  T5."PriceList" = :P_LISPRE AND
+		  T5."Currency" = :P_MONEDA AND
+		  T1."ItemCode" = :P_CODART
+	
+	UNION ALL
+	
+	SELECT	T3."UomEntry",
+			T4."UomCode",
+			T4."UomName",
+			T3."AltQty", 
+			T3."BaseQty"
+			,T5."Price"
+			,T5."Currency"
+			,T5."PriceList"
+	FROM "OITM" T1 
+	INNER JOIN "OUGP" T2 ON T2."UgpEntry" = T1."UgpEntry" 
+	INNER JOIN "UGP1" T3 ON T3."UgpEntry" = T2."UgpEntry"
+	INNER JOIN "OUOM" T4 ON T4."UomEntry" = T3."UomEntry"
+	INNER JOIN "ITM9" T5 ON T5."UomEntry" = T3."UomEntry"
+	  					AND T5."ItemCode" = T1."ItemCode"
+	WHERE T5."Price" > 0 AND T5."PriceList" <> -1 AND
+		  T5."PriceList" = :P_LISPRE AND
+		  T5."Currency" = :P_MONEDA AND
+	 	  T1."ItemCode" = :P_CODART
+	;
+END;

@@ -1,0 +1,20 @@
+CREATE PROCEDURE "EXX_TPED_ContactosCliente_Listar"
+(
+	IN P_CodCliente varchar(25)
+)
+LANGUAGE SQLSCRIPT AS
+BEGIN
+	
+	SELECT	"CardCode",
+			"Name",
+			"Position",
+			"Tel1",
+			"E_MailL",
+			"Cellolar",
+			"FirstName",
+			"MiddleName",
+			"LastName"			
+	FROM OCPR
+	WHERE "CardCode" = :P_CodCliente
+	ORDER BY "CntctCode";
+END;

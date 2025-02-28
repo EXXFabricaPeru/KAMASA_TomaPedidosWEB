@@ -1,0 +1,16 @@
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\bin\x64\Release\Etna.BOCNegocio.dll.config
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\bin\x64\Release\Etna.BOCNegocio.dll
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\bin\x64\Release\Etna.BOCNegocio.pdb
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\bin\x64\Release\DBCAccesoDatos.dll
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\bin\x64\Release\DTOEntidades.dll
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\bin\x64\Release\nJupiter.DataAccess.dll
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\bin\x64\Release\System.Data.Odbc.dll
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\bin\x64\Release\DBCAccesoDatos.pdb
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\bin\x64\Release\DBCAccesoDatos.dll.config
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\bin\x64\Release\DTOEntidades.pdb
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\bin\x64\Release\System.Data.Odbc.xml
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\obj\x64\Release\BOCNegocio.csproj.AssemblyReference.cache
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\obj\x64\Release\BOCNegocio.csproj.CoreCompileInputs.cache
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\obj\x64\Release\BOCNegocio.csproj.CopyComplete
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\obj\x64\Release\Etna.BOCNegocio.dll
+C:\DEV_EXX\TomaPedido\backend\BOCNegocio\obj\x64\Release\Etna.BOCNegocio.pdb

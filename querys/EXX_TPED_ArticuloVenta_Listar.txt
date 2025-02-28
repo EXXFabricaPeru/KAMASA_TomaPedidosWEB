@@ -1,0 +1,39 @@
+CREATE PROCEDURE "EXX_TPED_ArticuloVenta_Listar"
+(
+	IN P_Valor varchar(20), 
+	IN P_Almacen varchar(20),
+	IN P_ListPrice int,
+	IN P_Moneda varchar(5),
+	IN P_Todos int
+)
+AS
+BEGIN
+	
+	SELECT	"itm"."ItemCode",
+			"itm"."ItemName",
+			CASE WHEN "pre"."Currency" = :P_Moneda THEN "pre"."Price" ELSE "pre"."AddPrice1" END AS "PriceUnit",
+			"stk"."WhsCode",
+			"stk"."OnHand",
+			"stk"."OnHand" - "stk"."OnOrder" AS "Disponible",
+			"und"."UomEntry",
+			"itm"."SalUnitMsr",
+			"cat"."U_EXK_CENCOSTO",
+			"pre"."Currency",
+			"pre"."PriceList",
+			"stk"."OnOrder" AS "Solicitado"
+	FROM "OITM" "itm" 
+	LEFT  JOIN "@EXK_CATEGORIA" "cat" ON "cat"."Code" = "itm"."U_EXK_CATEGORIA"
+	INNER JOIN "OUOM" "und" ON "und"."UomName" = "itm"."SalUnitMsr"
+	INNER JOIN "ITM1" "pre" ON "itm"."ItemCode" = "pre"."ItemCode" 
+	  	   AND "pre"."UomEntry" = "und"."UomEntry"	  	   
+	INNER JOIN "OITW" "stk" ON "itm"."ItemCode" = "stk"."ItemCode"
+	WHERE (("stk"."OnHand" - "stk"."OnOrder") > 0 OR 1 = :P_Todos)
+	  AND "itm"."SellItem" = 'Y'	  
+	  AND "itm"."validFor" = 'Y'
+	  AND "itm"."frozenFor" = 'N'
+	  AND ("pre"."PriceList" = :P_ListPrice)
+	  --AND ("pre"."Currency" = :P_Moneda OR OR 1 = :P_Todos)
+	  AND (	UPPER("itm"."ItemCode") LIKE '%' || UPPER(:P_Valor) || '%' OR 
+	  		UPPER("itm"."ItemName") LIKE '%' || UPPER(:P_Valor) || '%')
+	  AND ("stk"."WhsCode" = :P_Almacen /*OR 1 = :P_Todos*/);
+END;

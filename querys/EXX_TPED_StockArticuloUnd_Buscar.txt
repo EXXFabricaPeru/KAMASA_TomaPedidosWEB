@@ -1,0 +1,22 @@
+CREATE PROCEDURE "EXX_TPED_StockArticuloUnd_Buscar"
+(
+	IN P_CodArticulo varchar(15),
+	IN P_UndMed int,
+	IN P_Almacen varchar(20)
+)
+AS
+BEGIN
+		
+			SELECT	(T6."OnHand" - T6."OnOrder") / T3."BaseQty" AS "Stock"
+					--,T3."AltQty" 
+					--,T3."BaseQty"
+					--,T1."ItemCode"
+					--,T6."WhsCode"
+			FROM "OITM" T1 
+			INNER JOIN "OUGP" T2 ON T2."UgpEntry" = T1."UgpEntry" 
+			INNER JOIN "UGP1" T3 ON T3."UgpEntry" = T2."UgpEntry"
+			INNER JOIN "OITW" T6 ON T6."ItemCode" = T1."ItemCode"
+			WHERE T3."UomEntry" = :P_UndMed AND
+				  T6."WhsCode" = :P_Almacen AND
+				  T1."ItemCode" = :P_CodArticulo;
+END

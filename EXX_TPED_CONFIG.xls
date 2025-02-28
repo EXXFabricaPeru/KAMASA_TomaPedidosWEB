@@ -1,0 +1,11 @@
+Code 	Name	DocEntry	Canceled	Object         	LogInst	UserSign	Transfered	CreateDate             	CreateTime	UpdateDate             	UpdateTime	DataSource	U_EXX_CAMPO   	U_EXX_FORMULARIO	U_EXX_VISIBLE	U_EXX_EDITABLE	U_EXX_VALOR
+00001	?   	1	N       	EXX_TPED_CONFIG	?      	32	N         	26 oct. 2023 00:00:00.0	1,846	31 ene. 2024 00:00:00.0	933	I         	EXX_TIPOOPER  	1	Y            	N             	1
+00002	?   	2	N       	EXX_TPED_CONFIG	?      	32	N         	26 oct. 2023 00:00:00.0	1,847	24 nov. 2023 00:00:00.0	1,630	I         	Dimension 1   	1	N            	N             	TRAD       
+00003	?   	3	N       	EXX_TPED_CONFIG	?      	32	N         	26 oct. 2023 00:00:00.0	1,848	26 oct. 2023 00:00:00.0	1,848	I         	Dimension 2   	1	N            	N             	?          
+00004	?   	4	N       	EXX_TPED_CONFIG	?      	32	N         	26 oct. 2023 00:00:00.0	1,848	26 oct. 2023 00:00:00.0	1,848	I         	Dimension 3   	1	N            	N             	?          
+00005	?   	5	N       	EXX_TPED_CONFIG	?      	32	N         	26 oct. 2023 00:00:00.0	1,848	26 oct. 2023 00:00:00.0	1,848	I         	Dimension 4   	1	N            	N             	?          
+00006	?   	6	N       	EXX_TPED_CONFIG	?      	32	N         	26 oct. 2023 00:00:00.0	1,848	26 oct. 2023 00:00:00.0	1,848	I         	Dimension 5   	1	N            	N             	?          
+00007	?   	7	N       	EXX_TPED_CONFIG	?      	32	N         	26 oct. 2023 00:00:00.0	1,850	26 oct. 2023 00:00:00.0	1,850	I         	Moneda        	1	Y            	N             	?          
+00008	?   	8	N       	EXX_TPED_CONFIG	?      	32	N         	26 oct. 2023 00:00:00.0	1,902	31 ene. 2024 00:00:00.0	1,929	I         	Condicion Pago	1	Y            	N             	?          
+00009	?   	9	N       	EXX_TPED_CONFIG	?      	32	N         	16 nov. 2023 00:00:00.0	1,007	16 nov. 2023 00:00:00.0	1,007	I         	Proyecto      	1	N            	N             	?          
+00010	?   	10	N       	EXX_TPED_CONFIG	?      	32	N         	16 nov. 2023 00:00:00.0	1,208	17 nov. 2023 00:00:00.0	639	I         	Impuesto      	1	Y            	Y             	IGV        

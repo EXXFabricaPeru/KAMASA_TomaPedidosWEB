@@ -1,0 +1,10 @@
+CREATE PROCEDURE "EXX_TPED_Zona_Listar" 
+
+AS
+BEGIN
+	
+	SELECT 	"Code", 
+			"Name" 
+	FROM "@EXK_ZONAVENTA";
+	
+END;

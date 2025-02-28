@@ -1,0 +1,9 @@
+ ;TableID;FieldID;AliasID           ;Descr                  ;TypeID;EditType;SizeID;EditSize;Dflt;NotNull;IndexID;RTable;RField;Action;Sys;DfltDate;RelUDO;ValidRule;RelSO;RThrdPTab;RThrdPFld
+1;NNM1   ;5      ;EXX_TPED_APTP     ;Serie Tomapedido       ;A     ;        ;10    ;10      ;N   ;N      ;N      ;?     ;?     ;?     ;N  ;?       ;?     ;         ;?    ;?        ;?        
+2;OCRG   ;9      ;EXX_TPED_USA      ;Usa Toma Pedido        ;A     ;        ;10    ;10      ;?   ;N      ;N      ;?     ;?     ;?     ;N  ;?       ;?     ;         ;?    ;?        ;?        
+3;OINV   ;206    ;EXX_TPED_LATITUD  ;Latitud                ;A     ;        ;20    ;20      ;?   ;N      ;N      ;?     ;?     ;?     ;N  ;?       ;?     ;         ;?    ;?        ;?        
+4;OINV   ;207    ;EXX_TPED_USERREG  ;Usuario Registra       ;A     ;        ;20    ;20      ;?   ;N      ;N      ;?     ;?     ;?     ;N  ;?       ;?     ;         ;?    ;?        ;?        
+5;OINV   ;236    ;EXX_TPED_VENDASIG ;Vendedor Asignado      ;A     ;        ;150   ;150     ;?   ;N      ;N      ;?     ;?     ;?     ;N  ;?       ;?     ;         ;?    ;?        ;?        
+6;OINV   ;235    ;EXX_TPED_CVENDASIG;Cod. Vend. Asignado    ;N     ;        ;11    ;10      ;?   ;N      ;N      ;?     ;?     ;?     ;N  ;?       ;?     ;         ;?    ;?        ;?        
+7;OINV   ;205    ;EXX_TPED_LONGITUD ;Longitud               ;A     ;        ;20    ;20      ;?   ;N      ;N      ;?     ;?     ;?     ;N  ;?       ;?     ;         ;?    ;?        ;?        
+8;OWHS   ;4      ;EXX_TPED_APTP     ;Considerar Toma Pedido?;A     ;        ;10    ;10      ;N   ;N      ;N      ;?     ;?     ;?     ;N  ;?       ;?     ;         ;?    ;?        ;?        

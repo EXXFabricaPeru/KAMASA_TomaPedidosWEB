@@ -1,0 +1,9 @@
+CREATE PROCEDURE "EXX_TPED_TipoOperacion_listar"
+
+AS
+BEGIN
+
+	SELECT	"Code",
+			"Code" || ' - ' || "Name" AS "Name"
+	FROM "@EXX_TIPOOPER";
+END

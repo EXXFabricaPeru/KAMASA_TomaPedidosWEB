@@ -1,0 +1,20 @@
+CREATE PROCEDURE "EXX_TPED_DireccionCliente_Buscar"
+(
+	IN P_CardCode varchar(25)
+)
+AS
+BEGIN
+
+	SELECT	"Address",
+			"Street",
+			"ZipCode",
+			"County",
+			"State",
+			"AdresType",
+			"LineNum",
+			"GlblLocNum" "Ubigeo",
+			"U_EXX_TPED_ZONA" "Zona"
+	FROM CRD1
+	WHERE "CardCode" = :P_CardCode
+	ORDER BY "LineNum";
+END;

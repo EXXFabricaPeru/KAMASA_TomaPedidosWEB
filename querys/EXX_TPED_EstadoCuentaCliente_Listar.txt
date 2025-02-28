@@ -1,0 +1,360 @@
+CREATE PROCEDURE "EXX_TPED_EstadoCuentaCliente_Listar" 
+(
+	IN P_Codigo nvarchar(15)
+)
+LANGUAGE SQLSCRIPT AS
+BEGIN
+	
+	DECLARE FlagLetras int;
+	DECLARE FlagFactoring int;
+	
+	-- Validacion si existe la tabla de letras
+	SELECT COUNT(*) INTO FlagLetras FROM "PUBLIC"."M_TABLES" WHERE SCHEMA_NAME = 'SBO_KAMASA_PRUEBAS' AND TABLE_NAME = '@OBOE';
+	-- Validacion si existe la tabla de factoring
+	SELECT COUNT(*) INTO FlagFactoring FROM "PUBLIC"."M_TABLES" WHERE SCHEMA_NAME = 'SBO_KAMASA_PRUEBAS' AND TABLE_NAME = '@OFCT';
+
+	IF FlagFactoring = 0 AND FlagLetras = 0 THEN
+		SELECT 
+			T0."DocNum" "Nro SAP",
+			'FACTURA' "Tipo",
+			T0."CardName" "Socio de Negocio",
+			T0."LicTradNum" "RUC",
+			T0."Address" "Direccion",
+			T0."FolioPref" || ' - ' || CAST(T0."FolioNum" AS NVARCHAR(8)) "Nro Legal",
+			T0."DocDueDate" "F.Vencimiento",
+			T0."DocCur" "Moneda",
+			CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" ELSE 0 END "Total Soles",
+			CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" ELSE 0 END "Total Dolares",
+			CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" - T0."PaidToDate" ELSE 0 END "Saldo Soles",
+			CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" - T0."PaidSys" ELSE 0 END "Saldo Dolares",
+			(SELECT T1."PymntGroup" FROM OCTG T1 WHERE T1."GroupNum"=T0."GroupNum") "Tipo Pago",
+			DAYS_BETWEEN(t0."DocDueDate", CURRENT_DATE)  "Dias Vencidos",
+			COALESCE(T1."CreditLine", 0) "CreditLine",
+			(SELECT	"CompnyName" FROM OADM) "Compania",
+			(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+			(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+			(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+			(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+		FROM OINV T0 
+		INNER JOIN OCRD T1 ON T1."CardCode" = T0."CardCode"
+		WHERE "DocStatus"='O' 
+		  --AND T0."PaidToDate" <> T0."PaidSum"
+		  --AND T0."DocDueDate"<=CURRENT_DATE
+		  AND T0."CardCode" = :P_Codigo
+		
+		UNION ALL
+		
+		SELECT 
+			T0."DocNum" "Nro SAP",
+			'NOTA CREDITO' "Tipo",
+			T0."CardName" "Socio de Negocio",
+			T0."LicTradNum" "RUC",
+			T0."Address",
+			T0."FolioPref" || ' - ' || CAST(T0."FolioNum" AS NVARCHAR(8)) "Nro Legal",
+			T0."DocDueDate" "F.Vencimiento",
+			T0."DocCur" "Moneda",
+			CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" ELSE 0 END "Total Soles",
+			CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" ELSE 0 END "Total Dolares",
+			CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" - T0."PaidToDate" ELSE 0 END "Saldo Soles",
+			CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" - T0."PaidSys" ELSE 0 END "Saldo Dolares",
+			(SELECT T1."PymntGroup" FROM OCTG T1 WHERE T1."GroupNum"=T0."GroupNum") "Tipo Pago",
+			DAYS_BETWEEN(t0."DocDueDate", CURRENT_DATE)  "Dias Vencidos",
+			COALESCE(T1."CreditLine", 0) "CreditLine",
+			(SELECT	"CompnyName" FROM OADM) "Compania",
+			(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+			(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+			(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+			(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+		FROM ORIN T0 
+		INNER JOIN OCRD T1 ON T1."CardCode" = T0."CardCode"
+		WHERE "DocStatus"='O' 
+		--AND T0."DocDueDate"<=CURRENT_DATE
+		AND T0."CardCode" = :P_Codigo
+		
+		UNION ALL
+		
+		SELECT 
+			T0."DocNum" "Nro SAP",
+			'ANTICIPOS' "Tipo",
+			T0."CardName" "Socio de Negocio",
+			T0."LicTradNum" "RUC",
+			T0."Address",
+			T0."FolioPref" || ' - ' || CAST(T0."FolioNum" AS NVARCHAR(8)) "Nro Legal",
+			T0."DocDueDate" "F.Vencimiento",
+			T0."DocCur" "Moneda",
+			CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" ELSE 0 END "Total Soles",
+			CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" ELSE 0 END "Total Dolares",
+			CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" - T0."PaidToDate" ELSE 0 END "Saldo Soles",
+			CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" - T0."PaidSys" ELSE 0 END "Saldo Dolares",
+			(SELECT T1."PymntGroup" FROM OCTG T1 WHERE T1."GroupNum"=T0."GroupNum") "Tipo Pago",
+			DAYS_BETWEEN(t0."DocDueDate", CURRENT_DATE)  "Dias Vencidos",
+			COALESCE(T1."CreditLine", 0) "CreditLine",
+			(SELECT	"CompnyName" FROM OADM) "Compania",
+			(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+			(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+			(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+			(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+		FROM ODPI T0 
+		INNER JOIN OCRD T1 ON T1."CardCode" = T0."CardCode"
+		WHERE "DocStatus"='O' 
+		--AND T0."DocDueDate"<=CURRENT_DATE
+		AND T0."CardCode" = :P_Codigo;
+	ELSE
+		IF FlagLetras > 0 AND FlagFactoring = 0 THEN
+			SELECT 
+				T0."DocNum" "Nro SAP",
+				'FACTURA' "Tipo",
+				T0."CardName" "Socio de Negocio",
+				T0."LicTradNum" "RUC",
+				T0."Address" "Direccion",
+				T0."FolioPref" || ' - ' || CAST(T0."FolioNum" AS NVARCHAR(8)) "Nro Legal",
+				T0."DocDueDate" "F.Vencimiento",
+				T0."DocCur" "Moneda",
+				CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" ELSE 0 END "Total Soles",
+				CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" ELSE 0 END "Total Dolares",
+				CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" - T0."PaidToDate" ELSE 0 END "Saldo Soles",
+				CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" - T0."PaidSys" ELSE 0 END "Saldo Dolares",
+				(SELECT T1."PymntGroup" FROM OCTG T1 WHERE T1."GroupNum"=T0."GroupNum") "Tipo Pago",
+				DAYS_BETWEEN(t0."DocDueDate", CURRENT_DATE)  "Dias Vencidos",
+				COALESCE(T1."CreditLine", 0) "CreditLine",
+				(SELECT	"CompnyName" FROM OADM) "Compania",
+				(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+				(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+				(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+				(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+			FROM OINV T0 
+			INNER JOIN OCRD T1 ON T1."CardCode" = T0."CardCode"
+			WHERE "DocStatus"='O' 
+			  --AND T0."PaidToDate" <> T0."PaidSum"
+			  --AND T0."DocDueDate"<=CURRENT_DATE
+			  AND T0."CardCode" = :P_Codigo
+			
+			UNION ALL
+			
+			SELECT 
+				T0."DocNum" "Nro SAP",
+				'NOTA CREDITO' "Tipo",
+				T0."CardName" "Socio de Negocio",
+				T0."LicTradNum" "RUC",
+				T0."Address",
+				T0."FolioPref" || ' - ' || CAST(T0."FolioNum" AS NVARCHAR(8)) "Nro Legal",
+				T0."DocDueDate" "F.Vencimiento",
+				T0."DocCur" "Moneda",
+				CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" ELSE 0 END "Total Soles",
+				CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" ELSE 0 END "Total Dolares",
+				CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" - T0."PaidToDate" ELSE 0 END "Saldo Soles",
+				CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" - T0."PaidSys" ELSE 0 END "Saldo Dolares",
+				(SELECT T1."PymntGroup" FROM OCTG T1 WHERE T1."GroupNum"=T0."GroupNum") "Tipo Pago",
+				DAYS_BETWEEN(t0."DocDueDate", CURRENT_DATE)  "Dias Vencidos",
+				COALESCE(T1."CreditLine", 0) "CreditLine",
+				(SELECT	"CompnyName" FROM OADM) "Compania",
+				(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+				(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+				(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+				(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+			FROM ORIN T0 
+			INNER JOIN OCRD T1 ON T1."CardCode" = T0."CardCode"
+			WHERE "DocStatus"='O' 
+			--AND T0."DocDueDate"<=CURRENT_DATE
+			AND T0."CardCode" = :P_Codigo
+			
+			UNION ALL
+			
+			SELECT 
+				T0."DocNum" "Nro SAP",
+				'ANTICIPOS' "Tipo",
+				T0."CardName" "Socio de Negocio",
+				T0."LicTradNum" "RUC",
+				T0."Address",
+				T0."FolioPref" || ' - ' || CAST(T0."FolioNum" AS NVARCHAR(8)) "Nro Legal",
+				T0."DocDueDate" "F.Vencimiento",
+				T0."DocCur" "Moneda",
+				CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" ELSE 0 END "Total Soles",
+				CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" ELSE 0 END "Total Dolares",
+				CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" - T0."PaidToDate" ELSE 0 END "Saldo Soles",
+				CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" - T0."PaidSys" ELSE 0 END "Saldo Dolares",
+				(SELECT T1."PymntGroup" FROM OCTG T1 WHERE T1."GroupNum"=T0."GroupNum") "Tipo Pago",
+				DAYS_BETWEEN(t0."DocDueDate", CURRENT_DATE)  "Dias Vencidos",
+				COALESCE(T1."CreditLine", 0) "CreditLine",
+				(SELECT	"CompnyName" FROM OADM) "Compania",
+				(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+				(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+				(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+				(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+			FROM ODPI T0 
+			INNER JOIN OCRD T1 ON T1."CardCode" = T0."CardCode"
+			WHERE "DocStatus"='O' 
+			--AND T0."DocDueDate"<=CURRENT_DATE
+			AND T0."CardCode" = :P_Codigo
+
+			UNION ALL
+			
+			SELECT 
+				T0."DocEntry" "Nro SAP",
+				'LETRAS' "Tipo",
+				T0."U_ACardName" "Socio de Negocio",
+				RIGHT(T0."U_ACardCode", 11) "RUC",
+				T0."U_AAddress" "Address",
+				T0."U_ABoeKey" "Nro Legal",
+				T0."U_ADueDate" "F.Vencimiento",
+				T0."U_ACurrency" "Moneda",
+				CASE T0."U_ACurrency" WHEN 'SOL' THEN T0."U_ABoeSum" ELSE 0 END "Total Soles",
+				CASE T0."U_ACurrency" WHEN 'USD' THEN T0."U_ABoeSumFC" ELSE 0 END "Total Dolares",
+				CASE T0."U_ACurrency" WHEN 'SOL' THEN T0."U_ABoeSum" ELSE 0 END "Saldo Soles",
+				CASE T0."U_ACurrency" WHEN 'USD' THEN T0."U_ABoeSumFC" ELSE 0 END "Saldo Dolares",
+				'Letra' "Tipo Pago",
+				DAYS_BETWEEN(t0."U_ADueDate", CURRENT_DATE)  "Dias Vencidos",
+				COALESCE(T1."CreditLine", 0) "CreditLine",
+				(SELECT	"CompnyName" FROM OADM) "Compania",
+				(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+				(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+				(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+				(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+			FROM "@OBOE" T0 
+			INNER JOIN OCRD T1 ON T1."CardCode" = T0."U_ACardCode"
+			WHERE T0."U_ABoeStatus" <> 'P' 
+			--AND T0."DocDueDate"<=CURRENT_DATE
+			  AND T0."U_ACardCode" = :P_Codigo;
+		/*ELSE
+			SELECT 
+					T0."DocNum" "Nro SAP",
+					'FACTURA' "Tipo",
+					T0."CardName" "Socio de Negocio",
+					T0."LicTradNum" "RUC",
+					T0."Address" "Direccion",
+					T0."FolioPref" || ' - ' || CAST(T0."FolioNum" AS NVARCHAR(8)) "Nro Legal",
+					T0."DocDueDate" "F.Vencimiento",
+					T0."DocCur" "Moneda",
+					CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" ELSE 0 END "Total Soles",
+					CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" ELSE 0 END "Total Dolares",
+					CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" - T0."PaidToDate" ELSE 0 END "Saldo Soles",
+					CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" - T0."PaidSys" ELSE 0 END "Saldo Dolares",
+					(SELECT T1."PymntGroup" FROM OCTG T1 WHERE T1."GroupNum"=T0."GroupNum") "Tipo Pago",
+					DAYS_BETWEEN(t0."DocDueDate", CURRENT_DATE)  "Dias Vencidos",
+					(SELECT	"CompnyName" FROM OADM) "Compania",
+					(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+					(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+					(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+					(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+				FROM OINV T0 
+				INNER JOIN OCRD T1 ON T1."CardCode" = T0."CardCode"
+				WHERE "DocStatus"='O' 
+				  --AND T0."PaidToDate" <> T0."PaidSum"
+				  --AND T0."DocDueDate"<=CURRENT_DATE
+				  AND T0."CardCode" = :P_Codigo
+				
+				UNION ALL
+				
+				SELECT 
+					T0."DocNum" "Nro SAP",
+					'NOTA CREDITO' "Tipo",
+					T0."CardName" "Socio de Negocio",
+					T0."LicTradNum" "RUC",
+					T0."Address",
+					T0."FolioPref" || ' - ' || CAST(T0."FolioNum" AS NVARCHAR(8)) "Nro Legal",
+					T0."DocDueDate" "F.Vencimiento",
+					T0."DocCur" "Moneda",
+					CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" ELSE 0 END "Total Soles",
+					CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" ELSE 0 END "Total Dolares",
+					CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" - T0."PaidToDate" ELSE 0 END "Saldo Soles",
+					CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" - T0."PaidSys" ELSE 0 END "Saldo Dolares",
+					(SELECT T1."PymntGroup" FROM OCTG T1 WHERE T1."GroupNum"=T0."GroupNum") "Tipo Pago",
+					DAYS_BETWEEN(t0."DocDueDate", CURRENT_DATE)  "Dias Vencidos",
+					(SELECT	"CompnyName" FROM OADM) "Compania",
+					(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+					(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+					(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+					(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+				FROM ORIN T0 
+				INNER JOIN OCRD T1 ON T1."CardCode" = T0."CardCode"
+				WHERE "DocStatus"='O' 
+				--AND T0."DocDueDate"<=CURRENT_DATE
+				AND T0."CardCode" = :P_Codigo
+				
+				UNION ALL
+				
+				SELECT 
+					T0."DocNum" "Nro SAP",
+					'ANTICIPOS' "Tipo",
+					T0."CardName" "Socio de Negocio",
+					T0."LicTradNum" "RUC",
+					T0."Address",
+					T0."FolioPref" || ' - ' || CAST(T0."FolioNum" AS NVARCHAR(8)) "Nro Legal",
+					T0."DocDueDate" "F.Vencimiento",
+					T0."DocCur" "Moneda",
+					CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" ELSE 0 END "Total Soles",
+					CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" ELSE 0 END "Total Dolares",
+					CASE T0."DocCur" WHEN 'SOL' THEN T0."DocTotal" - T0."PaidToDate" ELSE 0 END "Saldo Soles",
+					CASE T0."DocCur" WHEN 'USD' THEN T0."DocTotalFC" - T0."PaidSys" ELSE 0 END "Saldo Dolares",
+					(SELECT T1."PymntGroup" FROM OCTG T1 WHERE T1."GroupNum"=T0."GroupNum") "Tipo Pago",
+					DAYS_BETWEEN(t0."DocDueDate", CURRENT_DATE)  "Dias Vencidos",
+					(SELECT	"CompnyName" FROM OADM) "Compania",
+					(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+					(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+					(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+					(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+				FROM ODPI T0 
+				INNER JOIN OCRD T1 ON T1."CardCode" = T0."CardCode"
+				WHERE "DocStatus"='O' 
+				--AND T0."DocDueDate"<=CURRENT_DATE
+				AND T0."CardCode" = :P_Codigo
+	
+				UNION ALL
+				
+				SELECT 
+					T0."DocEntry" "Nro SAP",
+					'LETRAS' "Tipo",
+					T0."U_ACardName" "Socio de Negocio",
+					RIGHT(T0."U_ACardCode", 11) "RUC",
+					T0."U_AAddress" "Address",
+					T0."U_ABoeKey" "Nro Legal",
+					T0."U_ADueDate" "F.Vencimiento",
+					T0."U_ACurrency" "Moneda",
+					CASE T0."U_ACurrency" WHEN 'SOL' THEN T0."U_ABoeSum" ELSE 0 END "Total Soles",
+					CASE T0."U_ACurrency" WHEN 'USD' THEN T0."U_ABoeSumFC" ELSE 0 END "Total Dolares",
+					CASE T0."U_ACurrency" WHEN 'SOL' THEN T0."U_ABoeSum" ELSE 0 END "Saldo Soles",
+					CASE T0."U_ACurrency" WHEN 'USD' THEN T0."U_ABoeSumFC" ELSE 0 END "Saldo Dolares",
+					'Letra' "Tipo Pago",
+					DAYS_BETWEEN(t0."U_ADueDate", CURRENT_DATE)  "Dias Vencidos",
+					(SELECT	"CompnyName" FROM OADM) "Compania",
+					(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+					(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+					(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+					(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+				FROM "@OBOE" T0 
+				INNER JOIN OCRD T1 ON T1."CardCode" = T0."U_ACardCode"
+				WHERE "U_ABoeStatus" <> 'P' 
+				--AND T0."DocDueDate"<=CURRENT_DATE
+				AND T0."U_ACardCode" = :P_Codigo				
+					
+				UNION ALL
+				
+				SELECT 
+					T0."DocEntry" "Nro SAP",
+					'FACTORING' "Tipo",
+					T0."U_ACardName" "Socio de Negocio",
+					RIGHT(T0."U_ACardCode", 11) "RUC",
+					T0."U_AAddress" "Address",
+					T0."U_ABoeKey" "Nro Legal",
+					T0."U_ADueDate" "F.Vencimiento",
+					T0."U_ACurrency" "Moneda",
+					CASE T0."U_ACurrency" WHEN 'SOL' THEN T0."U_ABoeSum" ELSE 0 END "Total Soles",
+					CASE T0."U_ACurrency" WHEN 'USD' THEN T0."U_ABoeSumFC" ELSE 0 END "Total Dolares",
+					CASE T0."U_ACurrency" WHEN 'SOL' THEN T0."U_ABoeSum" ELSE 0 END "Saldo Soles",
+					CASE T0."U_ACurrency" WHEN 'USD' THEN T0."U_ABoeSumFC" ELSE 0 END "Saldo Dolares",
+					'Letra' "Tipo Pago",
+					DAYS_BETWEEN(t0."U_ADueDate", CURRENT_DATE)  "Dias Vencidos",
+					(SELECT	"CompnyName" FROM OADM) "Compania",
+					(SELECT	"CompnyAddr" FROM OADM) "CompaniaDir",
+					(SELECT	COALESCE("Phone1", '') || ' / ' || COALESCE("Phone2", '') FROM OADM)  "CompaniaTel",
+					(SELECT	"E_Mail" FROM OADM) "CompaniaMail",
+					(SELECT	"TaxIdNum" FROM OADM) "CompaniaRuc"
+				FROM "@OFCT" T0 
+				INNER JOIN OCRD T1 ON T1."CardCode" = T0."U_ACardCode"
+				WHERE "U_ABoeStatus" = 'P' 
+				--AND T0."DocDueDate" <= CURRENT_DATE
+				and T0."U_ACardCode" = :P_Codigo;
+			*/
+		END IF;	
+	END IF;
+END;

@@ -1,0 +1,16 @@
+-- =============================================
+-- Author:		Carlos Ubillus
+-- Create date: 29/09/2023
+-- Description:	Lista la lista de precios
+-- =============================================
+CREATE PROCEDURE "EXX_TPED_ListaPrecio_Listar"
+	-- Add the parameters for the stored procedure here
+	
+AS
+BEGIN
+	
+	SELECT	"ListNum",
+			"ListName"
+	FROM OPLN
+	ORDER BY "ListNum";
+END

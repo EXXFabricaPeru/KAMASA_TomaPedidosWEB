@@ -1,0 +1,51 @@
+CREATE PROCEDURE "EXX_TPED_PrecioArticuloUnd_Buscar"
+(
+	IN P_CodArticulo varchar(15),
+	IN P_UndMed varchar(15),
+	IN P_ListaPrec int,
+	IN P_Moneda varchar(3)
+)
+AS
+BEGIN
+	
+	SELECT 	"ItemCode", 
+			"PriceList", 
+			"Currency", 
+			"UomEntry", 
+			CASE WHEN "Currency" = :P_Moneda THEN "Price" ELSE "AddPrice1" END AS "Price"
+	FROM ITM1
+	WHERE ("Price" > 0 OR "AddPrice1" > 0)
+	  AND "ItemCode" = :P_CodArticulo
+	  AND "Currency" = :P_Moneda
+	  AND "UomEntry" = :P_UndMed
+	  AND "PriceList" = :P_ListaPrec
+
+	UNION ALL
+
+	SELECT	T1."ItemCode",
+			T5."PriceList",
+			T5."Currency",
+			T3."UomEntry",
+			CASE WHEN "Currency" = :P_Moneda THEN T5."Price" ELSE T5."AddPrice1" END "Price"
+	FROM "OITM" T1 
+	INNER JOIN "OUGP" T2 ON T2."UgpEntry" = T1."UgpEntry" 
+	INNER JOIN "UGP1" T3 ON T3."UgpEntry" = T2."UgpEntry"
+	INNER JOIN "OUOM" T4 ON T4."UomEntry" = T3."UomEntry"
+	INNER JOIN "ITM9" T5 ON T5."UomEntry" = T3."UomEntry"
+						AND T5."ItemCode" = T1."ItemCode"
+	WHERE (T5."Price" > 0 OR T5."AddPrice1" > 0)
+	  AND T5."PriceList" <> -1 AND
+		  T5."PriceList" = :P_ListaPrec AND
+		  T5."Currency" = :P_Moneda AND
+	 	  T1."ItemCode" = :P_CodArticulo AND
+	 	  T3."UomEntry" = :P_UndMed;
+/*
+	SELECT "ItemCode", "PriceList", "Currency", "UomEntry", "Price"
+	FROM ITM9
+	WHERE "Price" > 0
+	  AND "ItemCode" = :P_CodArticulo
+	  AND "Currency" = :P_Moneda
+	  AND "UomEntry" = :P_UndMed
+	  AND "PriceList" = :P_ListaPrec*/
+	  
+END

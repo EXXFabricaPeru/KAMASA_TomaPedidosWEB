@@ -1,0 +1,47 @@
+import { PedidoDet } from "./pedidodet";
+
+export interface PedidoCab {
+    idPedido: Number;
+    nroPedido: string;
+    codCliente: string;
+    condPago: string;
+    nroOC: string;
+    subTotal: Number;
+    descuento: Number;
+    importeTotal: Number;
+    moneda: string;
+    fecPedido?: Date;
+    fecSolicitado?: Date;
+    fecContabilizacion?: Date;
+    estado: string;
+    comentario: string;
+    codVendedor: string;
+    codDireccion: string;
+    direccion: string;
+    codTransTramo1: string;
+    rucTransTramo1: string;
+    nomTransTramo1: string;
+    dirTransTramo1: string;
+    userReg: string;
+    latitud: string;
+    longitud: string;
+    nomCliente: string;
+    rucCliente: string;
+    tipoDoc: string;
+    fecDespacho?: Date;
+    fecFacturacion?: Date;
+    tipoOperacion: string;
+    series: string;
+    archivo: string;
+    nomArchivo: string;
+    sucursal: number;
+    codAgTra: string;
+    nomAgTra: string;
+    rucAgTra: string;
+    dirAgTra: string;
+    cdiAgTra: string;
+    zonAgTra: string;
+    medioEnvio: number;
+    estadoPed: string;
+    listaDetalle: PedidoDet[];
+}

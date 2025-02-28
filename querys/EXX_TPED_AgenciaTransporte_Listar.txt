@@ -1,0 +1,20 @@
+CREATE PROCEDURE "EXX_TPED_AgenciaTransporte_Listar"
+
+AS
+BEGIN
+	
+	SELECT 	T0."CardCode",
+			T0."CardName",
+			T0."LicTradNum",
+			T1."Street",
+			T1."Address",
+			T1."U_EXX_TPED_ZONA" 
+	FROM OCRD T0
+	INNER JOIN CRD1 T1 ON T0."CardCode" = T1."CardCode"
+	WHERE T0."QryGroup10" = 'Y'
+	  AND T0."CardType" = 'S'
+	  AND T1."AdresType" = 'S'
+	  /*AND (T0."CardCode" LIKE '%' || :P_Valor || '%' OR 
+	  	   UPPER(T0."CardName") LIKE '%' || UPPER(:P_Valor) || '%')*/;
+	  
+END

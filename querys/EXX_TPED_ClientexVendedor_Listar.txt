@@ -1,0 +1,37 @@
+CREATE PROCEDURE "EXX_TPED_ClientexVendedor_Listar"
+(
+	IN P_Valor varchar(100),
+	IN P_Vendedor int,
+	IN P_Flag varchar(1)
+)
+AS
+BEGIN
+
+	SELECT	"CardCode",
+			"CardName",
+			"LicTradNum",
+			"ListNum", --ListaPrecio
+			"SlpCode",
+			"GroupNum", --Condicion de pago
+			IFNULL("CreditLine", 0) "CreditLine",
+			IFNULL("Balance", 0) "Balance",
+			IFNULL("ShipType", -1) "ShipType",
+			IFNULL("CreditLine", 0) - "Balance" AS "Saldo",
+			(SELECT COUNT(*) 
+			 FROM "@EXK_TSCZ" X 
+			 WHERE X."U_EXK_SLPCODE" = :P_Vendedor
+			   AND T0."U_EXK_ZONA" = X."U_EXK_ZONA" 
+			   AND T0."GroupCode" = X."U_EXK_TPOCLIE"
+			   AND T0."U_EXK_CODDPTO" = X."U_EXK_CODDPTO") "Flag"
+	FROM OCRD T0
+	INNER JOIN OCRG T1 ON T1."GroupCode" = T0."GroupCode"
+	WHERE T0."validFor" = 'Y'
+	  AND T1.U_EXX_TPED_USA = 'Y' -- Solo grupo de clientes del toma pedido
+	  --AND T0."SlpCode" = 6
+	  AND(T0."U_EXK_ZONA" IN (SELECT T1."U_EXK_ZONA" FROM "@EXK_TSCZ" T1 WHERE T1."U_EXK_SLPCODE" = :P_Vendedor)
+	  AND T0."GroupCode" IN (SELECT T1."U_EXK_TPOCLIE" FROM "@EXK_TSCZ" T1 WHERE T1."U_EXK_SLPCODE" = :P_Vendedor)
+	  AND T0."U_EXK_CODDPTO" IN (SELECT T1."U_EXK_CODDPTO" FROM "@EXK_TSCZ" T1 WHERE T1."U_EXK_SLPCODE" = :P_Vendedor)
+	       OR 'T' = :P_Flag)
+	  AND (T0."LicTradNum" LIKE '%' || :P_Valor || '%' OR 
+	  	   UPPER(T0."CardName")  LIKE '%' || UPPER(:P_Valor) || '%');
+END

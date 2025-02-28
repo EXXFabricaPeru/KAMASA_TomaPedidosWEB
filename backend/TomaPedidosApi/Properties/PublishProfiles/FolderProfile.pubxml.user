@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <History>True|2023-09-28T21:11:59.0594191Z;True|2023-09-28T15:36:29.5495651-05:00;True|2023-09-28T15:18:13.7021542-05:00;True|2023-09-28T15:04:59.2416870-05:00;True|2023-09-28T14:52:18.8328555-05:00;True|2023-09-28T14:35:18.4141114-05:00;True|2023-09-28T14:34:23.0409948-05:00;True|2023-09-28T14:31:19.6551360-05:00;True|2023-09-28T12:36:07.2376907-05:00;True|2023-09-28T10:36:22.6228685-05:00;True|2023-09-27T17:57:05.6627262-05:00;True|2023-09-27T17:23:09.5881664-05:00;False|2023-09-27T17:17:19.9520737-05:00;</History>
+    <_PublishTargetUrl>C:\inetpub\wwwroot\backendTomaPedido</_PublishTargetUrl>
+  </PropertyGroup>
+</Project>

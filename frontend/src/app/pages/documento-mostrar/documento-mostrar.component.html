@@ -1,0 +1,286 @@
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <!-- <div class="container-fluid">
+      
+  </div> -->
+</div>
+<!-- Page content -->
+<div class="container-fluid mt--7" style="margin-top: -13rem !important;">
+  <div class="row">      
+    <div class="col-xl-12 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-6">
+              <h3 class="mb-0">{{ _titulo }}</h3>
+            </div>
+            <div class="col-6 align-items-right">
+                <a (click)="copiarPedido()" class="btn btn-sm btn-success" placement="bottom" ngbTooltip="Copiar a Pedido" *ngIf="copyTo" style="top: 10;" >
+                  <i _ngcontent-c5="" class="ni ni-single-copy-04"></i>
+                </a>
+                
+                <a (click)="editarPedido()" class="btn btn-sm btn-default" placement="bottom" ngbTooltip="Editar" *ngIf="editCoti" style="top: 10;" >
+                  <i _ngcontent-c5="" class="ni ni-archive-2"></i>
+                </a>
+                
+                <a (click)="descargarReporte()" class="btn btn-sm btn-default" placement="bottom" ngbTooltip="Descargar" style="top: 10;" >
+                  <i _ngcontent-c5="" class="ni ni-cloud-download-95"></i>
+                </a>
+            </div>            
+          </div>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="pl-lg-4">
+              
+              <div class="row">
+                <div class="col-lg-3">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-cod-cliente">Código Cliente</label>
+                    <input type="text" id="input-cod-cliente" placeholder="Codigo cliente" class="form-control" disabled="" />
+                  </div>
+                </div>
+                
+                <div class="col-lg-9">
+                  <div class="form-group">
+                    <label class="form-control-label" for="input-razon-social">Razon Social</label>
+                    <input type="text" id="input-razon-social" class="form-control" placeholder="Razon Social" disabled="" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-3">
+                    <div class="form-group">
+                      <label class="form-control-label" for="input-fecha-docu">Fecha Documento</label>
+                      <input type="date" id="input-fecha-docu" class="form-control form-control-alternative" disabled="" >
+                    </div>
+                  </div>
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-fecha-necesaria">Fecha Vigencia</label>
+                        <input type="date" id="input-fecha-necesaria" class="form-control form-control-alternative" disabled="" >
+                      </div>
+                  </div>
+                  <div class="col-lg-3">
+                      <label class="form-control-label" for="input-serie">Serie</label>
+                      <select id="input-serie" class="form-control" disabled="" >            
+                        <!-- <option value="">--Seleccione--</option> -->
+                        <option *ngFor="let serie of listaSeries" [value]="serie.codigo" > {{ serie.descripcion }} </option>            
+                      </select>
+                  </div>
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-cod-moneda">Moneda</label>
+                        <select id="input-cod-moneda" class="form-control" disabled="" >
+                          <option value="">--Seleccione--</option>
+                          <option *ngFor="let moneda of listaMoneda" [value]="moneda.codigo" > {{ moneda.descripcion }} </option>            
+                        </select>
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-dir-cli">Dirección Despacho</label>
+                        <select id="input-dir-cli" class="form-control" disabled="">
+                          <option *ngFor="let almacen of listaAlmacenCliente" [value]="almacen.codigo" > {{ almacen.descripcion }} </option>            
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-alm-ven">Almacén Ventas</label>
+                        <select id="input-alm-ven" class="form-control" disabled="">            
+                          <!-- <option value="">--Seleccione--</option> -->
+                          <option *ngFor="let almacen of listaAlmacen" [value]="almacen.codigo" > {{ almacen.descripcion }} </option>            
+                        </select>
+                      </div>
+                  </div>                    
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-cod-imp">Cod. Impuesto</label>
+                        <select id="input-cod-imp" class="form-control" disabled="">
+                          <option value="">--Seleccione--</option>
+                          <option *ngFor="let impuesto of listaImpuesto" [value]="impuesto.codigo" > {{ impuesto.descripcion }} </option>            
+                        </select>
+                      </div>
+                  </div>
+                  <div class="col-lg-3">
+                      <div class="form-group" >
+                        <label class="form-control-label" for="input-cond-pago">Cond. Pago</label>
+                          <select id="input-cond-pago" class="form-control" disabled="">            
+                            <option value="">--Seleccione--</option>
+                            <option *ngFor="let codpago of listaCondPago" [value]="codpago.codigo" > {{ codpago.descripcion }} </option>            
+                          </select>
+                      </div>
+                  </div>                                        
+              </div>
+              <div class="row">
+                  <div class="col-lg-3">
+                      <div class="form-group">
+                          <label class="form-control-label" for="input-tip-ope">Tipo Operación</label>
+                          <select id="input-tip-ope" class="form-control" disabled="">            
+                              <option value="">--Seleccione--</option>
+                              <option *ngFor="let oper of listaTpoOper" [value]="oper.codigo" > {{ oper.descripcion }} </option>            
+                          </select>
+                      </div>
+                  </div>
+                  <div class="col-lg-9">
+                      <label class="form-control-label" for="input-comment">Comentario</label>
+                      <input type="text" id="input-comment" placeholder="Comentarios" class="form-control form-control-alternative" disabled="" />
+                  </div>                  
+              </div>
+            </div>
+            <hr class="my-4" />
+            <!-- Table -->
+            <div class="row">
+                  <div class="col">
+                      <div class="card shadow">          
+                          <div class="table-responsive">
+                              <table class="table align-items-center table-flush" id="gridDoc">
+                                  <thead class="thead-light">
+                                      <tr>
+                                          <th [class]="item.customClass" scope="col" *ngFor="let item of headerDocumento">{{ item.label }}</th>
+                                      </tr>
+                                  </thead>
+                                  <tbody>
+                                      <tr *ngFor="let row of pedidoDet">
+                                          <td [class]="item.customClass" *ngFor="let item of headerDocumento">                                              
+                                            <ng-container *ngIf="row[item.key]">                                        
+                                              <ng-container *ngIf="item.subKey=='' && item.type=='' && item.key!='idProducto'">
+                                                {{ row[item.key] }}
+                                              </ng-container>
+                                              <ng-container *ngIf="item.subKey=='' && item.type=='decimal' ">
+                                                {{ row[item.key] | number:3.1-2 }}
+                                              </ng-container>
+                                              <ng-container *ngIf="item.subKey=='' && item.type=='' && item.key=='idProducto'">
+                                                {{ row[item.key] }}
+                                              </ng-container>
+                                            </ng-container>
+                                            <ng-container *ngIf="item.type=='buttonDelete'">
+                                                <button type="button" class="btn btn-danger btn-sm" (click)="deleteRow(row)">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                            </ng-container>
+                                            <ng-container *ngIf="item.type=='text'">
+                                                <ng-container *ngIf="item.customClass == ''" >
+                                                  <input type="text" id="txt" class="form-control form-control-alternative right" style="width: 100px;" (blur)='actualizarCant(row)' >
+                                                </ng-container>
+                                                <ng-container *ngIf="item.customClass == 'porcentaje'" >
+                                                  <input type="text" id="txt" class="form-control form-control-alternative right" style="width: 100px;" (blur)='actualizarDesc(row)' >
+                                                </ng-container>
+                                            </ng-container>
+                                            <ng-container *ngIf="item.type=='select'">
+                  <!--                                                   
+                                                  <ng-container *ngIf="item.customClass=='Dimension 1'">
+                                                      <select class="form-control" >            
+                                                          <option value="">--Seleccione--</option>
+                                                          <option *ngFor="let dimension of listaDim1" [value]="dimension.codigo" > {{ dimension.descripcion }} </option>            
+                                                      </select>
+                                                  </ng-container>
+                              
+                                                  <ng-container *ngIf="item.customClass=='Dimension 2'">
+                                                      <select class="form-control" >            
+                                                          <option value="">--Seleccione--</option>
+                                                          <option *ngFor="let dimension of listaDim2" [value]="dimension.codigo" > {{ dimension.descripcion }} </option>            
+                                                      </select>
+                                                  </ng-container>
+         
+                                                  <ng-container *ngIf="item.customClass=='Dimension 3'">
+                                                      <select class="form-control" >            
+                                                          <option value="">--Seleccione--</option>
+                                                          <option *ngFor="let dimension of listaDim3" [value]="dimension.codigo" > {{ dimension.descripcion }} </option>            
+                                                      </select>
+                                                  </ng-container>
+                              
+                                                  <ng-container *ngIf="item.customClass=='Dimension 4'">
+                                                      <select class="form-control" >            
+                                                          <option value="">--Seleccione--</option>
+                                                          <option *ngFor="let dimension of listaDim4" [value]="dimension.codigo" > {{ dimension.descripcion }} </option>            
+                                                      </select>
+                                                  </ng-container>
+                              
+                                                  <ng-container *ngIf="item.customClass=='Dimension 5'">
+                                                      <select class="form-control" >            
+                                                          <option value="">--Seleccione--</option>
+                                                          <option *ngFor="let dimension of listaDim5" [value]="dimension.codigo" > {{ dimension.descripcion }} </option>            
+                                                      </select>
+                                                  </ng-container>
+                  
+                                                  <ng-container *ngIf="item.customClass=='Proyecto'">
+                                                      <select class="form-control">            
+                                                          <option value="">--Seleccione--</option>
+                                                          <option *ngFor="let proyecto of listaProyecto" [value]="proyecto.codigo" > {{ proyecto.descripcion }} </option>            
+                                                      </select>
+                                                  </ng-container>
+                  -->
+                                              <ng-container *ngIf="item.customClass=='listaUnd'">
+                                                <select class="form-control" (change)="actualizarPrecio(row)" [(ngModel)]="row.unidad" >            
+                                                  <option value="">--Seleccione--</option>
+                                                  <option *ngFor="let undMed of row[item.customClass]" [value]="undMed.codigo" > {{ undMed.descripcion }} </option>            
+                                                </select>
+                                              </ng-container>
+                                            </ng-container>
+                                          </td>
+                                      </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-subtotal">SubTotal</label>
+                  <input id="input-subtotal" type="text" placeholder="0.00" class="form-control form-control-alternative right" disabled="disabled"/>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-descuento">Descuento</label>
+                  <input id="input-descuento" type="text" placeholder="0.00" class="form-control form-control-alternative right"  disabled="disabled"/>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-impuesto">Impuesto</label>
+                  <input id="input-impuesto" type="text" placeholder="0.00" class="form-control form-control-alternative right" disabled="disabled"/>
+                </div>
+              </div>
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label" for="input-total">Total</label>
+                  <input id="input-total" type="text" placeholder="0.00" class="form-control form-control-alternative right" disabled="disabled"/>
+                </div>
+              </div>
+            </div>
+          </form>
+
+          <!-- Error Dialog -->
+          <div tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" [ngClass]="(errorDialog) ? 'modal modalApp' : 'modal fade bd-example-modal-lg'">
+              <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                  <div class="modal-header">
+                      <h5>Mensaje Sistema</h5>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row">
+                          <div class="col-lg-12">
+                              <span *ngIf="errorDialog">
+                                  <p [innerHTML]="msgError"></p>
+                              </span>
+                          </div>                              
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                      <button class="btn btn-secundary" (click)="closeDialog()">OK</button>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

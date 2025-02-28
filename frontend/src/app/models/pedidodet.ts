@@ -1,0 +1,32 @@
+export interface PedidoDet {
+    idProducto: string;
+    descripcion: string;
+    cantidad: Number;
+    codUndMed: Number;
+    unidad: string;
+    precioUnit: Number;
+    precioTotal: Number;
+    tipoImpuesto: string;
+    codAlmacen: string;
+    stockDisponible: Number;
+    dimension1: string;
+    dimension2: string;
+    dimension3: string;
+    dimension4: string;
+    dimension5: string;
+    proyecto: string;
+    lineNum: Number;
+    descuento: Number;
+    u_EXP_CODIGO: string;
+    u_EXP_PROMOCION: string;
+    u_EXP_TIPO: string;
+    u_EXP_VALOR: Number;
+    u_EXP_ASIGNAR: Number;
+    u_EXP_APLICACANT: Number;
+    u_EXP_COLOR: string;
+    u_EXP_TIPODSCTO: string;
+    u_EXP_REFERENCIA: string;
+    isBonificcion: boolean;
+    precioBruto: number;
+    listaUnd: any[];
+}

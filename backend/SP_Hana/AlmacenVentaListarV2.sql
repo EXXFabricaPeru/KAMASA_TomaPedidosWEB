@@ -1,0 +1,10 @@
+ALTER PROCEDURE "EXX_TPED_Almacen_Listar"
+
+AS
+BEGIN
+	
+	SELECT	"WhsCode", 
+			"WhsName" 
+	FROM "OWHS"
+	WHERE "U_EXX_TPED_APTP" ='Y';
+END

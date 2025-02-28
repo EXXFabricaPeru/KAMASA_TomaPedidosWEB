@@ -1,0 +1,29 @@
+CREATE PROCEDURE "EXX_TPED_Bonificaciones_Buscar"
+(
+	IN P_CodigoOperacion varchar(100)
+)
+AS
+BEGIN
+	
+SELECT  T1."Code",
+		T1.U_ITEMCODE,
+		T0."ItemName",
+		T4."Price",
+		T1.U_LINEID,
+		T3."UomEntry",
+		T1.U_CANTIDAD,
+		T1.U_PROMOCION,
+		T1.U_COLOR,
+		T2.U_EXK_CENCOSTO,
+		'O' U_TIPO,
+		100 U_VALOR
+	FROM "@EXP_PROMO_TEMP2" T1
+	INNER JOIN OITM T0 ON T0."ItemCode" = T1.U_ITEMCODE
+	INNER JOIN OUOM T3 ON T3."UomName" = T0."SalUnitMsr"
+	INNER JOIN ITM1 T4 ON T0."ItemCode" = T4."ItemCode" 
+	  	   AND T4."UomEntry" = T3."UomEntry"
+	  	   AND T4."PriceList" = 1
+	LEFT  JOIN "@EXK_CATEGORIA" T2 ON T2."Code" = T0.U_EXK_CATEGORIA
+WHERE U_CODOPERACION = :P_CodigoOperacion;
+
+END

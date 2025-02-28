@@ -1,0 +1,123 @@
+{
+  "version": 3,
+  "targets": {
+    "net7.0": {
+      "BOCNegocio/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "DBCAccesoDatos": "1.0.0",
+          "DTOEntidades": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/BOCNegocio.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BOCNegocio.dll": {}
+        }
+      },
+      "DBCAccesoDatos/1.0.0": {
+        "type": "project",
+        "dependencies": {
+          "DTOEntidades": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/DBCAccesoDatos.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DBCAccesoDatos.dll": {}
+        }
+      },
+      "DTOEntidades/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/DTOEntidades.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/DTOEntidades.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "BOCNegocio/1.0.0": {
+      "type": "project",
+      "path": "../BOCNegocio/BOCNegocio.csproj",
+      "msbuildProject": "../BOCNegocio/BOCNegocio.csproj"
+    },
+    "DBCAccesoDatos/1.0.0": {
+      "type": "project",
+      "path": "../DBCAccesoDatos/DBCAccesoDatos.csproj",
+      "msbuildProject": "../DBCAccesoDatos/DBCAccesoDatos.csproj"
+    },
+    "DTOEntidades/1.0.0": {
+      "type": "project",
+      "path": "../DTOEntidades/DTOEntidades.csproj",
+      "msbuildProject": "../DTOEntidades/DTOEntidades.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net7.0": [
+      "BOCNegocio >= 1.0.0",
+      "DTOEntidades >= 1.0.0"
+    ]
+  },
+  "packageFolders": {
+    "C:\\Users\\LAP20221202\\.nuget\\packages\\": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "C:\\EXXIS Desarrollos\\Fuentes\\TomaPedidoKamasa\\backend\\TomaPedidosApi\\TomaPedidosApi.csproj",
+      "projectName": "TomaPedidosApi",
+      "projectPath": "C:\\EXXIS Desarrollos\\Fuentes\\TomaPedidoKamasa\\backend\\TomaPedidosApi\\TomaPedidosApi.csproj",
+      "packagesPath": "C:\\Users\\LAP20221202\\.nuget\\packages\\",
+      "outputPath": "C:\\EXXIS Desarrollos\\Fuentes\\TomaPedidoKamasa\\backend\\TomaPedidosApi\\obj\\",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "C:\\Users\\LAP20221202\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+      ],
+      "originalTargetFrameworks": [
+        "net7.0"
+      ],
+      "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "projectReferences": {
+            "C:\\EXXIS Desarrollos\\Fuentes\\TomaPedidoKamasa\\backend\\BOCNegocio\\BOCNegocio.csproj": {
+              "projectPath": "C:\\EXXIS Desarrollos\\Fuentes\\TomaPedidoKamasa\\backend\\BOCNegocio\\BOCNegocio.csproj"
+            },
+            "C:\\EXXIS Desarrollos\\Fuentes\\TomaPedidoKamasa\\backend\\DTOEntidades\\DTOEntidades.csproj": {
+              "projectPath": "C:\\EXXIS Desarrollos\\Fuentes\\TomaPedidoKamasa\\backend\\DTOEntidades\\DTOEntidades.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      }
+    },
+    "frameworks": {
+      "net7.0": {
+        "targetAlias": "net7.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.416\\RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

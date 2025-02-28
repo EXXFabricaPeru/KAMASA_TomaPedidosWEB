@@ -1,0 +1,26 @@
+CREATE PROCEDURE "EXX_TPED_StockArticulos_Listar"
+(
+	IN P_CodArticulo varchar(15),
+	IN P_UndMed int
+)
+AS
+-- =================================================
+-- Author:		Carlos Ubillus
+-- Create date: 29/09/2023
+-- Description:	Lista de stock articulos por almacen
+-- =================================================
+BEGIN
+	
+	SELECT	"itm"."ItemName", 
+			"stk"."WhsCode" || ' - ' || "alm"."WhsName" "WhsCode", 
+			"stk"."OnHand" / T3."BaseQty" "OnHand", 
+			("stk"."OnHand" - "stk"."OnOrder") / T3."BaseQty" AS "Disponible"
+	FROM OITM "itm" 
+	INNER JOIN "OITW" "stk" ON "itm"."ItemCode" = "stk"."ItemCode"
+	INNER JOIN "OWHS" "alm" ON "alm"."WhsCode" = "stk"."WhsCode"
+	INNER JOIN "OUGP" T2 ON T2."UgpEntry" = "itm"."UgpEntry" 
+	INNER JOIN "UGP1" T3 ON T3."UgpEntry" = T2."UgpEntry"
+	WHERE ("stk"."OnHand" - "stk"."OnOrder") > 0
+	  AND "itm"."ItemCode" = :P_CodArticulo
+	  AND T3."UomEntry" = :P_UndMed;
+END

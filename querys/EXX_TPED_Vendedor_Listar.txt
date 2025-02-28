@@ -1,0 +1,11 @@
+CREATE PROCEDURE "EXX_TPED_Vendedor_Listar" 
+
+LANGUAGE SQLSCRIPT AS
+BEGIN
+	
+    -- Insert statements for procedure here
+	SELECT	"SlpCode",
+			"SlpName"
+	FROM "OSLP" 
+	WHERE "Active" = 'Y';
+END;
